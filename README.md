@@ -2,6 +2,8 @@
 
 This project is a pingback to my [blog post](https://hulkops.gitbook.io/blog/red-team/x64-call-stack-spoofing)
 
+# Do not walk through in DEBUG mode. Prologues etc get clobbered.
+
 # How this works
 - Move Current RSP to Non-Volatile Register (r15)
 - Move the first argument to non volatile register (r13 )
