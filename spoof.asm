@@ -22,7 +22,7 @@ Spoof PROC
 	pop r15														; Top of the stack will have return address of the Function which has called this Spoof Function
 																; When this Spoof function completes execution, we can use this value to resume the normal execution flow
 
-	mov r13, rcx												; r13 now point to STACK_INFO struct
+	mov r13, rcx												; r13 now point to STACK_INFO struct since Spoof is called as Spoof(&StructInfo) and first aruement is in rcx
 
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	;			Creating Synthetic Frames
@@ -83,8 +83,8 @@ loop_start:
 	; Configure the Pointer to "restore" in rbx
 
 setup_rbx:
-	mov r10, restore
-	mov [r13].STACK_INFO.pRbx, r10
+	mov r10, restore // restore is a function that removes the fake frames from the stack
+	mov [r13].STACK_INFO.pRbx, r10 // since the gadget is 'jmp dword ptr [eb]', therefore ebx has to hold the address of the routine and not the routine itself.
 	lea rbx, [r13].STACK_INFO.pRbx
 	
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
